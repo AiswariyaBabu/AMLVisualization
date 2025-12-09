@@ -22,7 +22,7 @@
                             {"Day Span", each Duration.Days(List.Max([Date])-List.Min([Date]))}})
 ```
 5. This revealed expected patterns in regards to Smurfing/Structuring patterns. Several smaller cash deposits (below the 5,000 GBP threshold) being made to the same receiver account over short periods of time:
-[Rows in Power Query displaying the fast-and-small deposits](./PatternRevealed.png)
+![Rows in Power Query displaying the fast-and-small deposits](./PatternRevealed.png)
 
 6. I then went on to flag and segregate higher risk transactions involving either high amounts (15,000+ GBP) in a spread out duration (closer to 45 days) or amounts deliberately separated into small sections totalling more than 10,000 GBP over two weeks, etc.
 ```
@@ -38,7 +38,7 @@
 2. I enlisted the help of ChatGPT to analyze the pros and cons of choosing various chart types like a bubble chart, or a scatter plot, or something along the lines of a heat map.
 3. I eventually came to the conclusion that bubble charts displayed the most amount of data, enabling me to paint the picture of this sneaky AML pattern:
 
-[Bubble Chart displaying the Top 10 most suspicious smurfing transactions](./AMLBubbles.png)
+![Bubble Chart displaying the Top 10 most suspicious smurfing transactions](./AMLBubbles.png)
 
 ### Credits for the dataset:
 B. Oztas, D. Cetinkaya, F. Adedoyin, M. Budka, H. Dogan and G. Aksu, "Enhancing Anti-Money Laundering: Development of a Synthetic Transaction Monitoring Dataset," 2023 IEEE International Conference on e-Business Engineering (ICEBE), Sydney, Australia, 2023, pp. 47-54, doi: 10.1109/ICEBE59045.2023.00028.
