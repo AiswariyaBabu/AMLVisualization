@@ -2,7 +2,7 @@
 
 ## Initial Exploratory Data Analysis
 1. Discovered that the 9.5M+ rows simply cannot be loaded into an Excel sheet, given Excel's current limit of about 1M+ rows.
-2. Loaded the table into Power Pivot for quick load times, and smoother exploration. (Later, I removed the Power Pivot processed dataset as I moved on from EDA, and this significantly increased the .xlsx file size)
+2. Loaded the table into Power Pivot for quick load times, and smoother exploration. (Later, I removed the Power Pivot processed dataset as I moved on from EDA, as this significantly increased the .xlsx file size)
 3. This sample AML dataset includes 12 features and 28 different typologies, so I decided to start small  and explore the Structuring/Smurfing dataset that I am familiar with.
 4. Switched to Power Query for the ETL (Extract, Transform, Load) processing. The data needed to be  filtered, grouped, and structured to be much less than 9M rows and be in a sensible format for visualization.
 
