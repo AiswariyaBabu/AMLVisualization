@@ -2,12 +2,12 @@
 
 ## Initial Exploratory Data Analysis
 1. Discovered that the 9.5M+ rows simply cannot be loaded into an Excel sheet, given Excel's current limit of about 1M+ rows.
-2. Loaded the table into Power Pivot for quick load times, and smoother exploration.
-3. This sample AML dataset includes 12 features and 28 different typologies, so I have decided to start small  and explore the Structuring/Smurfing dataset that I am familiar with.
-4. Switched to Power Query for the 'T' of the ETL (Extract, Transform, Load) pipeline. The data needed to be  filtered, grouped, and structured to be much less than 9M rows and be in a sensible format for visualization.
+2. Loaded the table into Power Pivot for quick load times, and smoother exploration. (Later, I removed the Power Pivot processed dataset as I moved on from EDA, and this significantly increased the .xlsx file size)
+3. This sample AML dataset includes 12 features and 28 different typologies, so I decided to start small  and explore the Structuring/Smurfing dataset that I am familiar with.
+4. Switched to Power Query for the ETL (Extract, Transform, Load) processing. The data needed to be  filtered, grouped, and structured to be much less than 9M rows and be in a sensible format for visualization.
 
 ## Phase 2: Transforming the Data
-1. Using the GUI elements and M Code, I began filtering down the dataset.
+1. Using the GUI elements and M Code, I began filtering down the dataset in Power Query.
 2. As a best practice, I referenced the base data in a new query (Remember, I need to explore other typologies later).
 3. I filtered the data for "Cash Deposit" transactions using the `Payment_type` feature in the dataset as this is the most common method smurfers use to hide their tracks.
 ```
@@ -24,7 +24,7 @@
 5. This revealed expected patterns in regards to Smurfing/Structuring patterns. Several smaller cash deposits (below the 5,000 GBP threshold) being made to the same receiver account over short periods of time:
 ![Rows in Power Query displaying the fast-and-small deposits](./PatternRevealed.png)
 
-6. I then went on to flag and segregate higher risk transactions involving either high amounts (15,000+ GBP) in a spread out duration (closer to 45 days) or amounts deliberately separated into small sections totalling more than 10,000 GBP over two weeks, etc.
+6. I then went on to flag and segregate higher risk transactions involving either high amounts (15,000+ GBP) in a spread out duration (closer to 45 days) or amounts deliberately separated into small sections totalling more than 10,000 GBP over a couple of months, etc.
 ```
 #"Flag High Risk" = Table.AddColumn(#"Add Frequency column", "High Risk Flag", 
                         each if ([Total Cash Deposit] >= 5000) and ([Day Span] <= 14) then "HIGH - FAST" 
