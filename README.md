@@ -5,10 +5,25 @@
 2. Loaded the table into Power Pivot for quick load times, and smoother exploration. (Later, I removed the Power Pivot processed dataset as I moved on from EDA, as this significantly increased the .xlsx file size)
 3. This sample AML dataset includes 12 features and 28 different typologies, so I decided to start small  and explore the Structuring/Smurfing dataset that I am familiar with.
 4. Switched to Power Query for the ETL (Extract, Transform, Load) processing. The data needed to be  filtered, grouped, and structured to be much less than 9M rows and be in a sensible format for visualization.
+5. Discovered that I every time I added a step to a query, or refreshed preview, the load times were unbearable.
+6. Following this, I switched from directly using the CSV file as a source, to using DuckDB to return a subset of the data relevant to smurfing. (This significantly improved loading and processing times, and gives me an opportunity to showcase some basic SQL querying).
 
 ## Phase 2: Transforming the Data
-1. Using the GUI elements and M Code, I began filtering down the dataset in Power Query.
-2. As a best practice, I referenced the base data in a new query (Remember, I need to explore other typologies later).
+1. Using the GUI elements, M Code, and SQL (DuckDB) I began filtering down the dataset in Power Query.
+2. The SQL filtered out any transactions that weren't of `Laundering_type` - ['Deposit-Send', 'Normal_Cash_Deposits', 'Smurfing'].
+```
+SELECT
+    Date,
+    Receiver_account,
+    Sender_account,
+    Amount,
+    Payment_type,
+    Is_laundering,
+    Laundering_type
+FROM
+    'D:\OneDrive - Centennial College\Job Applications\Jobs - Cheeku\AML Project\SAML-D.csv'
+WHERE Laundering_type IN ('Deposit-Send', 'Normal_Cash_Deposits', 'Smurfing');
+```
 3. I filtered the data for "Cash Deposit" transactions using the `Payment_type` feature in the dataset as this is the most common method smurfers use to hide their tracks.
 ```
 #"Filter for Cash Deposits" = Table.SelectRows(Source, each [Payment_type] = "Cash Deposit")
@@ -35,7 +50,7 @@
 
 ## Phase 3: Visualization
 1. Choosing a chart to represent these complicated yet clearly occuring patterns of financial data was no simple task for a beginner like myself.
-2. I enlisted the help of ChatGPT to analyze the pros and cons of choosing various chart types like a bubble chart, or a scatter plot, or something along the lines of a heat map.
+2. I enlisted the help of ChatGPT, Gemini, and Claude to analyze the pros and cons of choosing various chart types like a bubble chart, or a scatter plot, or something along the lines of a heat map.
 3. I eventually came to the conclusion that bubble charts displayed the most amount of data, enabling me to paint the picture of this sneaky AML pattern:
 
 ![Bubble Chart displaying the Top 10 most suspicious smurfing transactions](./AMLBubbles.png)
